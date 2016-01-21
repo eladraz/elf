@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{961aad24-b09f-4d41-a495-ca9c82915232}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{99e41ef1-2e47-45df-b4bf-f318a5d08a88}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Dwarf">
+      <UniqueIdentifier>{65b497ac-4aa7-4347-beb1-43a1838f28a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\open_source">
+      <UniqueIdentifier>{212b9d39-7307-4a01-b166-3dbc6dd204ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dwarf">
+      <UniqueIdentifier>{239bc6d3-0222-4474-8430-bb062049c802}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\elf\cElfFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\elf\cElfMemoryMapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\elf\cElfRelocationSection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\elf\cElfSection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\elf\cElfStringTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\elf\cElfSymbol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\elf\Dwarf\cDwarf2Manager.cpp">
+      <Filter>Source Files\Dwarf</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\elf\Dwarf\cDwarfAttribute.cpp">
+      <Filter>Source Files\Dwarf</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\elf\Dwarf\cDwarfDie.cpp">
+      <Filter>Source Files\Dwarf</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\elf\Makefile.am">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\elf\cElfConsts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\cElfFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\cElfMemoryMapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\cElfRelocationSection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\cElfSection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\cElfStringTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\cElfSymbol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\opensource_headers\dwarf.h">
+      <Filter>Header Files\open_source</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\opensource_headers\elf.h">
+      <Filter>Header Files\open_source</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\Dwarf\cDwarf2Manager.h">
+      <Filter>Header Files\Dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\Dwarf\cDwarfAttribute.h">
+      <Filter>Header Files\Dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\Dwarf\cDwarfDie.h">
+      <Filter>Header Files\Dwarf</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
