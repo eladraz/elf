@@ -122,7 +122,6 @@ private:
 	cString m_filePath;
 	cString m_producer;
 	uint8	m_ptrSize;
-	uint32  m_csSize;
 };
 
 typedef cSmartPtr<cDwarf2Manager> cDwarf2ManagerPtr;

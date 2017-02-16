@@ -76,7 +76,6 @@ void cElfMemoryMapper::processSections()
 	Elf32_Shdr curSectionHdr;
 	cBuffer	   curSectionData;
 	int		sections_count = 0;
-	int		namesIndex = 0;
 	uint32 totalDataCount = 0;
 	cString sectionName;
 

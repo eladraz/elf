@@ -78,7 +78,6 @@ public:
 	void getStrTable(cBuffer & outBuff);
 private:
 	uint8 m_tag;
-	uint8 m_idxCnt;
 	cElfStringTablePtr m_intStrTable;
 
 	cArray<cDwarfAttributePtr> m_attributes;

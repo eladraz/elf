@@ -61,8 +61,7 @@ cDwarf2Manager::cDwarf2Manager( const cString & producer,
 								const cString & filePath,
 								uint8 pointerSize,
 								uint32 codeSectionSize) :
-	m_ptrSize(pointerSize),
-	m_csSize(codeSectionSize)
+	m_ptrSize(pointerSize)
 {
 	this->m_mainCU = cDwarfDiePtr(new cDwarfDie(DW_TAG_compile_unit));
 	this->m_mainCU->addAttr(DW_AT_producer, producer);
