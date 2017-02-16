@@ -45,8 +45,8 @@
 #include "xStl/stream/memoryAccesserStream.h"
 
 cElfMemoryMapper::cElfMemoryMapper(cArray<cElfSectionPtr> fileSections, uint32 dataOffset) :
-m_sections(fileSections),
-m_dataStartOffset(dataOffset)
+	m_dataStartOffset(dataOffset),
+	m_sections(fileSections)
 {
 	this->buildMapping();
 }
