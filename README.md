@@ -68,6 +68,19 @@ In order to pass variable arguments to [Visual Studio](http://www.visualstudio.c
 
 How to Build
 ============
+CMake
+-----
+CMake is cross-compile system for many platform and many system.
+You can read about it more [here](https://cmake.org/install/)
+
+Here is a quick example on how to run xStl with ninja build:
+```
+mkdir build
+cd build
+cmake -G Ninja ..
+ninja -j
+```
+
 Linux
 -----
 Build all projects (the default configuration of the compilation script is the debug/unicode version):
