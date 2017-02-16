@@ -1,4 +1,6 @@
 ![unmaintained](http://img.shields.io/badge/status-unmaintained-red.png)
+[![build status](https://travis-ci.org/eladraz/elf.svg?branch=master)](https://travis-ci.org/eladraz/elf/)
+[![coverity status](https://scan.coverity.com/projects/11794/badge.svg)](https://scan.coverity.com/projects/eladraz-elf)
 
 elf
 ===
