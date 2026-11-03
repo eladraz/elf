@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.10)
 project (elf)
 set (elf_VERSION_MAJOR 1)
 set (elf_VERSION_MINOR 0)

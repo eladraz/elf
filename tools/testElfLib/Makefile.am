@@ -29,6 +29,7 @@ testELF_LDADD = -L$(XSTL_PATH)/out/lib -lxstl \
                -L$(XSTL_PATH)/out/lib -lxstl_random \
                -L$(XSTL_PATH)/out/lib -lxstl_encryptions \
                -L$(XSTL_PATH)/out/lib -lxstl_utils \
-               -L$(top_srcdir)/Source/elf -lelf
+               -L$(top_srcdir)/Source/elf -lelf \
+               -L$(XSTL_PATH)/out/lib -lxstl
 
 

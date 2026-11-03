@@ -116,7 +116,7 @@ jobs:
         shell: pwsh
         working-directory: elf
         run: |
-          $exe = Get-ChildItem -Recurse -Filter testElfLib.exe -Path tools/testElfLib | Select-Object -First 1
+          $exe = Get-ChildItem -Recurse -Filter testElfLib.exe -Path . | Select-Object -First 1
           if (-not $exe) { throw 'testElfLib.exe not found' }
           & $exe.FullName tests/fixtures/sample-i386.o
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
