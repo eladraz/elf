@@ -1,0 +1,43 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - cc: gcc
+            cxx: g++
+          - cc: clang
+            cxx: clang++
+    env:
+      CC: ${{ matrix.cc }}
+      CXX: ${{ matrix.cxx }}
+      XSTL_PATH: ${{ github.workspace }}/xStl
+    steps:
+      - name: Check out elf
+        uses: actions/checkout@v4
+        with:
+          path: elf
+      - name: Check out xStl
+        uses: actions/checkout@v4
+        with:
+          repository: eladraz/xStl
+          path: xStl
+      - name: Build xStl
+        run: |
+          cmake -S "$XSTL_PATH" -B "$XSTL_PATH/build" -DCMAKE_BUILD_TYPE=Debug
+          cmake --build "$XSTL_PATH/build" --parallel 4
+      - name: Build elf
+        run: |
+          cmake -S elf -B elf/build -DCMAKE_BUILD_TYPE=Debug
+          cmake --build elf/build --parallel 4

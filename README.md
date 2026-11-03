@@ -1,5 +1,5 @@
-![unmaintained](http://img.shields.io/badge/status-unmaintained-red.png)
-[![build status](https://travis-ci.org/eladraz/elf.svg?branch=master)](https://travis-ci.org/eladraz/elf/)
+![maintained](https://img.shields.io/badge/status-maintained-brightgreen)
+[![Build](https://github.com/eladraz/elf/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/eladraz/elf/actions/workflows/ci.yml)
 [![coverity status](https://scan.coverity.com/projects/11794/badge.svg)](https://scan.coverity.com/projects/eladraz-elf)
 
 elf
