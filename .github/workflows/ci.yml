@@ -9,35 +9,114 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    runs-on: ubuntu-24.04
+  cmake:
+    name: CMake ${{ matrix.os }} ${{ matrix.compiler }} ${{ matrix.build_type }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, macos-15-intel]
+        build_type: [Debug, Release]
+        compiler: [default]
         include:
-          - cc: gcc
-            cxx: g++
-          - cc: clang
-            cxx: clang++
+          - os: ubuntu-latest
+            build_type: Debug
+            compiler: clang
+          - os: ubuntu-latest
+            build_type: Release
+            compiler: clang
     env:
-      CC: ${{ matrix.cc }}
-      CXX: ${{ matrix.cxx }}
       XSTL_PATH: ${{ github.workspace }}/xStl
     steps:
-      - name: Check out elf
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           path: elf
-      - name: Check out xStl
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           repository: eladraz/xStl
           path: xStl
+      - name: Select Clang
+        if: matrix.compiler == 'clang'
+        run: |
+          echo 'CC=clang' >> "$GITHUB_ENV"
+          echo 'CXX=clang++' >> "$GITHUB_ENV"
       - name: Build xStl
         run: |
-          cmake -S "$XSTL_PATH" -B "$XSTL_PATH/build" -DCMAKE_BUILD_TYPE=Debug
+          cmake -S "$XSTL_PATH" -B "$XSTL_PATH/build" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           cmake --build "$XSTL_PATH/build" --parallel 4
       - name: Build elf
         run: |
-          cmake -S elf -B elf/build -DCMAKE_BUILD_TYPE=Debug
+          cmake -S elf -B elf/build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           cmake --build elf/build --parallel 4
+      - name: Run tests
+        run: ctest --test-dir elf/build --output-on-failure
+
+  autotools:
+    name: Autotools ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    env:
+      XSTL_PATH: ${{ github.workspace }}/xStl
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: elf
+      - uses: actions/checkout@v4
+        with:
+          repository: eladraz/xStl
+          path: xStl
+      - name: Install tools (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y autoconf automake libtool
+      - name: Install tools (macOS)
+        if: runner.os == 'macOS'
+        run: brew install autoconf automake libtool
+      - name: Build xStl
+        working-directory: xStl
+        run: ./build.sh
+      - name: Build elf
+        working-directory: elf
+        run: ./build.sh
+      - name: Run test
+        working-directory: elf
+        run: ./out/bin/testELF tests/fixtures/sample-i386.o
+
+  windows:
+    name: MSBuild windows ${{ matrix.platform }} ${{ matrix.configuration }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [Win32, x64]
+        configuration: [Debug, Release]
+    env:
+      XSTL_PATH: ${{ github.workspace }}\xStl
+      ELFLIB_PATH: ${{ github.workspace }}\elf
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: elf
+      - uses: actions/checkout@v4
+        with:
+          repository: eladraz/xStl
+          path: xStl
+      - uses: microsoft/setup-msbuild@v2
+      - name: Build solution
+        working-directory: elf
+        run: >-
+          msbuild elf.sln -m
+          /p:Configuration=${{ matrix.configuration }}
+          /p:Platform=${{ matrix.platform }}
+          /p:PlatformToolset=v143
+          /p:WindowsTargetPlatformVersion=10.0
+      - name: Run test
+        shell: pwsh
+        working-directory: elf
+        run: |
+          $exe = Get-ChildItem -Recurse -Filter testElfLib.exe -Path tools/testElfLib | Select-Object -First 1
+          if (-not $exe) { throw 'testElfLib.exe not found' }
+          & $exe.FullName tests/fixtures/sample-i386.o
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

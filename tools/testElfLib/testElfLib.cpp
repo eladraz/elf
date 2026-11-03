@@ -62,15 +62,19 @@ int main(int argc, char * argv[])
 	{
 		if (argc != 2)
 		{
-			cout << "Usage: dumpPE <filename>";
+			cout << "Usage: testELF <filename>";
 			return RC_ERROR;
 		}
 
 		copyfile(argv[1], OUTPUT_FILENAME);
 		cFileStream elfTestRead(OUTPUT_FILENAME);
  		cElfFile outputReadTest(elfTestRead, true);
+		if (!outputReadTest.hasSymbol("retFunc"))
+		{
+			return RC_ERROR;
+		}
 
-		return 1;
+		return 0;
 	}
 	XSTL_CATCH(cException& e)
 	{
