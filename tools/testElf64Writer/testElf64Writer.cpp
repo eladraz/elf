@@ -46,8 +46,12 @@
 #include "xStl/stream/fileStream.h"
 #include "xStl/stream/ioStream.h"
 
-// The function answer(): mov eax, 42 ; ret
-static const uint8 ANSWER_CODE[] = { 0xb8, 0x2a, 0x00, 0x00, 0x00, 0xc3 };
+// The function answer(): mov eax, [rip + k] ; add eax, 1 ; ret
+// k is a local 32-bit variable in .data holding 41, reached through a RELA
+// PC-relative relocation. This covers data sections, local symbols (declared
+// after the global one, so the writer must reorder them) and relocations.
+static const uint8 ANSWER_CODE[] = { 0x8b, 0x05, 0x00, 0x00, 0x00, 0x00, 0x83, 0xc0, 0x01, 0xc3 };
+static const uint8 ANSWER_DATA[] = { 41, 0, 0, 0 };
 static const int ANSWER_EXPECTED_EXIT = 42;
 
 // Writes an ELF64 object that defines the global function 'answer'.
@@ -56,10 +60,16 @@ static void writeAnswerObject(const char* outputPath)
 	cBuffer code;
 	code.changeSize(sizeof(ANSWER_CODE), true);
 	memcpy(code.getBuffer(), ANSWER_CODE, sizeof(ANSWER_CODE));
+	cBuffer data;
+	data.changeSize(sizeof(ANSWER_DATA), true);
+	memcpy(data.getBuffer(), ANSWER_DATA, sizeof(ANSWER_DATA));
 
 	cElf64ObjectWriter writer(EM_X86_64);
 	uint text = writer.addSection(cString(".text"), SHT_PROGBITS, SHF_ALLOC | SHF_EXECINSTR, 16, code);
-	writer.addSymbol(cString("answer"), text, 0, sizeof(ANSWER_CODE), true, true);
+	uint dataSection = writer.addSection(cString(".data"), SHT_PROGBITS, SHF_ALLOC | SHF_WRITE, 4, data);
+	writer.addSymbol(cString("answer"), (uint16)text, 0, sizeof(ANSWER_CODE), true, true);
+	uint k = writer.addSymbol(cString("k"), (uint16)dataSection, 0, sizeof(ANSWER_DATA), false, false);
+	writer.addRelocation(text, 2, R_X86_64_PC32, k, -4);
 
 	cFileStream output(cString(outputPath), cFile::WRITE | cFile::CREATE | cFile::SHARE_READ | cFile::SHARE_WRITE);
 	writer.save(output);

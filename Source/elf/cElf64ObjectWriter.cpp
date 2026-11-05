@@ -164,7 +164,8 @@ uint cElf64ObjectWriter::addSection(const cString & name, uint32 type, uint64 fl
 
 uint cElf64ObjectWriter::addSymbol(const cString & name, uint16 sectionIndex, uint64 value, uint64 size, bool isFunction, bool isGlobal)
 {
-	if (sectionIndex > this->m_sections.getSize())
+	// Reserved indices (SHN_ABS, SHN_COMMON, ...) are passed through as is.
+	if ((sectionIndex > this->m_sections.getSize()) && (sectionIndex < SHN_LORESERVE))
 	{
 		XSTL_THROW(cException, XSTL_STRING("ELF symbol refers to a section that was not added."));
 	}
