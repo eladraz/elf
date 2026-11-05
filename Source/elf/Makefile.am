@@ -8,7 +8,7 @@ endif
 
 lib_LTLIBRARIES = libelf.la
 
-libelf_la_SOURCES = cElfFile.cpp cElfRelocationSection.cpp cElfStringTable.cpp cElfMemoryMapper.cpp cElfSection.cpp cElfSymbol.cpp \
+libelf_la_SOURCES = cElfFile.cpp cElf64ObjectWriter.cpp cElfRelocationSection.cpp cElfStringTable.cpp cElfMemoryMapper.cpp cElfSection.cpp cElfSymbol.cpp \
                     Dwarf/cDwarf2Manager.cpp  Dwarf/cDwarfAttribute.cpp  Dwarf/cDwarfDie.cpp
 
 

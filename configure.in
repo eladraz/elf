@@ -67,5 +67,6 @@ AC_SUBST(CFLAGS_ELFLIB_COMMON)
 AC_OUTPUT([Makefile
            Source/elf/Makefile
            tools/testElfLib/Makefile
+           tools/testElf64Writer/Makefile
         ])
 
