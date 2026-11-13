@@ -37,6 +37,12 @@
 #include <sys/wait.h>
 #endif
 
+// The answer object is x86-64 code: link and run it only on an x86-64 Linux
+// host. Elsewhere the test only writes the object.
+#if defined(LINUX) && (defined(__x86_64__) || defined(__amd64__))
+#define ELF64_LINK_AND_RUN
+#endif
+
 #include "elf/cElf64ObjectWriter.h"
 
 #include "xStl/types.h"
@@ -75,7 +81,7 @@ static void writeAnswerObject(const char* outputPath)
 	writer.save(output);
 }
 
-#ifdef LINUX
+#ifdef ELF64_LINK_AND_RUN
 // Links the object with a C main() using the system compiler, runs it and
 // checks that the exit status is the value returned by answer().
 static bool linkAndRun(const char* objectPath, const char* mainPath)
@@ -121,7 +127,7 @@ int main(int argc, char * argv[])
 
 		writeAnswerObject(argv[1]);
 
-#ifdef LINUX
+#ifdef ELF64_LINK_AND_RUN
 		if (!linkAndRun(argv[1], argv[2]))
 		{
 			return RC_ERROR;
