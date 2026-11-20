@@ -23,6 +23,9 @@
     <ClCompile Include="Source\elf\cElf64ObjectWriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\elf\cElf64Image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source\elf\cElfFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -58,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\elf\cElf64ObjectWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\elf\cElf64Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\elf\cElfConsts.h">

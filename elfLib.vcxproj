@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\elf\cElf64ObjectWriter.cpp" />
+    <ClCompile Include="Source\elf\cElf64Image.cpp" />
     <ClCompile Include="Source\elf\cElfFile.cpp" />
     <ClCompile Include="Source\elf\cElfMemoryMapper.cpp" />
     <ClCompile Include="Source\elf\cElfRelocationSection.cpp" />
@@ -35,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\elf\cElf64ObjectWriter.h" />
+    <ClInclude Include="Include\elf\cElf64Image.h" />
     <ClInclude Include="Include\elf\cElfConsts.h" />
     <ClInclude Include="Include\elf\cElfFile.h" />
     <ClInclude Include="Include\elf\cElfMemoryMapper.h" />
