@@ -34,6 +34,7 @@ add_definitions(-D_UNICODE)
 list(APPEND ELF_LIB_FILES
 	Source/elf/cElfFile.cpp
 	Source/elf/cElf64ObjectWriter.cpp
+	Source/elf/cElf64Image.cpp
 	Source/elf/cElfRelocationSection.cpp
 	Source/elf/cElfStringTable.cpp
 	Source/elf/cElfMemoryMapper.cpp
@@ -82,4 +83,7 @@ if(BUILD_TESTING)
 	if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 		add_test(NAME elf64_writer COMMAND testElf64Writer ${CMAKE_BINARY_DIR}/elf64_answer.o ${CMAKE_SOURCE_DIR}/tests/fixtures/elf64_answer_main.c)
 	endif()
+	add_executable(testElf64Image tools/testElf64Image/testElf64Image.cpp)
+	target_link_libraries(testElf64Image elf)
+	add_test(NAME elf64_image COMMAND testElf64Image ${CMAKE_SOURCE_DIR}/tests/fixtures/elf64/aarch64-exec.elf ${CMAKE_SOURCE_DIR}/tests/fixtures/elf64/riscv64-exec.elf)
 endif()
