@@ -68,5 +68,6 @@ AC_OUTPUT([Makefile
            Source/elf/Makefile
            tools/testElfLib/Makefile
            tools/testElf64Writer/Makefile
+           tools/testElf64Image/Makefile
         ])
 
